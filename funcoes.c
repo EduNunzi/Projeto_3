@@ -237,3 +237,56 @@ void Filtrar_Por_Estado(struct STarefas tarefas[], int numero_de_tarefas){
         printf("Nao ha tarefas com o estado %s.", estado);
     }
 }
+
+void Filtrar_Por_Categoria(struct STarefas tarefas[], int numero_de_tarefas) {
+    char Categoria_da_Tarefa[100];
+    printf("Digite a categoria da tarefa: ");
+    getchar();
+    fgets(Categoria_da_Tarefa, sizeof(Categoria_da_Tarefa), stdin);
+
+    int Tarefa_Encontrada = 0;
+    int Prioridade_da_Tarefa[MAX_TAREFAS];
+    int Prioridades = 0;
+
+    for (int i = 0; i < numero_de_tarefas; i++) {
+        if (strcmp(tarefas[i].categoria, Categoria_da_Tarefa) == 0) {
+            Prioridade_da_Tarefa[Prioridades] = tarefas[i].prioridade;
+            Prioridades++;
+        }
+    }
+
+
+    for (int i = 0; i < Prioridades - 1; i++) {
+        for (int j = 0; j < Prioridades - i - 1; j++) {
+            if (Prioridade_da_Tarefa[j] < Prioridade_da_Tarefa[j + 1]) {
+                int temp = Prioridade_da_Tarefa[j];
+                Prioridade_da_Tarefa[j] = Prioridade_da_Tarefa[j + 1];
+                Prioridade_da_Tarefa[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int k = 0; k < Prioridades; k++) {
+        for (int i = 0; i < numero_de_tarefas; i++) {
+            if (tarefas[i].prioridade == Prioridade_da_Tarefa[k] && strcmp(tarefas[i].categoria, Categoria_da_Tarefa) == 0) {
+                printf("Prioridade: %d\n", tarefas[i].prioridade);
+                printf("Descricao: %s", tarefas[i].descricao);
+                printf("Categoria: %s", tarefas[i].categoria);
+                if (strcmp(tarefas[i].estado, "nao") == 0) {
+                    printf("Estado: nao iniciada\n");
+                }
+                else if (strcmp(tarefas[i].estado, "em") == 0) {
+                    printf("Estado: em antamento\n");
+                }
+                else if (strcmp(tarefas[i].estado, "completo") == 0){
+                    printf("Estado: completo\n");
+                }
+                Tarefa_Encontrada = 1;
+            }
+        }
+    }
+
+    if (!Tarefa_Encontrada) {
+        printf("Nao ha tarefas com as categorias %s.\n", Categoria_da_Tarefa);
+    }
+}
