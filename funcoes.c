@@ -207,3 +207,33 @@ void Filtrar_Por_Prioridade(struct STarefas tarefas[], int numero_de_tarefas){
         printf("Nao ha tarefas com a prioridade %d.", Prioridade_da_Tarefa);
     }
 }
+
+void Filtrar_Por_Estado(struct STarefas tarefas[], int numero_de_tarefas){
+    char estado[20];
+    printf("Digite o estado da tarefa: ");
+    getchar();
+    fgets(estado, sizeof(estado), stdin);
+
+    int Tarefa_Encontrada=0;
+
+    for(int i= 0; i<numero_de_tarefas; i++ ){
+        if (strcmp(tarefas[i].estado, estado) == 0) {
+            printf("Prioridade: %d\n", tarefas[i].prioridade);
+            printf("Descricao : %s", tarefas[i].descricao);
+            printf("Categoria : %s", tarefas[i].categoria);
+            if (strcmp(tarefas[i].estado, "nao") == 0) {
+                printf("Estado: nao iniciada\n");
+            }
+            else if (strcmp(tarefas[i].estado, "em") == 0) {
+                printf("Estado: em antamento\n");
+            }
+            else if (strcmp(tarefas[i].estado, "completo") == 0){
+                printf("Estado: completo\n");
+            }
+            Tarefa_Encontrada= 1 ;
+        }
+    }
+    if(!Tarefa_Encontrada){
+        printf("Nao ha tarefas com o estado %s.", estado);
+    }
+}
