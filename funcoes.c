@@ -178,3 +178,32 @@ void Alterar_Tarefa(struct STarefas tarefas[], int numero_de_tarefas) {
         printf("Tarefa nao encontrada.\n");
     }
 }
+
+void Filtrar_Por_Prioridade(struct STarefas tarefas[], int numero_de_tarefas){
+    int Prioridade_da_Tarefa;
+    printf("Digite a prioridade que voce deseja filtrar : ");
+    scanf("%d", &Prioridade_da_Tarefa);
+
+    int Tarefa_Encontrada=0;
+
+    for(int i= 0; i<numero_de_tarefas; i++ ){
+        if( tarefas[i].prioridade == Prioridade_da_Tarefa){
+            printf("Prioridade: %d\n", tarefas[i].prioridade);
+            printf("Descricao : %s", tarefas[i].descricao);
+            printf("Categoria : %s", tarefas[i].categoria);
+            if (strcmp(tarefas[i].estado, "nao") == 0) {
+                printf("Estado: nao iniciada\n");
+            }
+            else if (strcmp(tarefas[i].estado, "em") == 0) {
+                printf("Estado: em antamento\n");
+            }
+            else if (strcmp(tarefas[i].estado, "completo") == 0){
+                printf("Estado: completo\n");
+            }
+            Tarefa_Encontrada= 1 ;
+        }
+    }
+    if(!Tarefa_Encontrada){
+        printf("Nao ha tarefas com a prioridade %d.", Prioridade_da_Tarefa);
+    }
+}
